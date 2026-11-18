@@ -1,16 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { FolderClosed, TrendingUp } from "lucide-react";
+import { useState } from "react";
+import { Home, MessageCircle, Settings, ShieldCheck } from "lucide-react";
 
-import { SiteHeader } from "@/components/site-header";
+import { AdminPage } from "@/routes/admin";
+import { ChatPage } from "@/routes/chat";
+import { SettingsPage } from "@/routes/settings";
+import { ConstellationSky } from "@/components/constellation-sky";
 import { useAuth } from "@/lib/auth-provider";
+
+type Section = "home" | "chat" | "settings" | "admin";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Classes" },
-      { name: "description", content: "Your classes, all in one place." },
-      { property: "og:title", content: "Classes" },
-      { property: "og:description", content: "Your classes, all in one place." },
+      { title: "Nightfall" },
+      { name: "description", content: "Your Nightfall home for chat, settings and community tools." },
+      { property: "og:title", content: "Nightfall" },
+      { property: "og:description", content: "Your Nightfall home for chat, settings and community tools." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -18,63 +24,85 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const CLASSES = [
-  { name: "Algebra II", section: "Period 1", teacher: "Ms. Rivera", banner: "bg-banner-1" },
-  { name: "AP Biology", section: "Period 2", teacher: "Mr. Chen", banner: "bg-banner-2" },
-  { name: "English 10", section: "Period 3", teacher: "Mrs. Patel", banner: "bg-banner-3" },
-  { name: "World History", section: "Period 4", teacher: "Mr. Okafor", banner: "bg-banner-4" },
-  { name: "Chemistry", section: "Period 5", teacher: "Dr. Lindqvist", banner: "bg-banner-5" },
-  { name: "Spanish II", section: "Period 6", teacher: "Sra. Morales", banner: "bg-banner-6" },
-];
-
 function Index() {
-  const { status, profile } = useAuth();
+  const { status, profile, isAdmin } = useAuth();
+  const [section, setSection] = useState<Section>("home");
+
+  if (status === "signed-out") {
+    return (
+      <div className="theme-void relative flex min-h-screen items-center justify-center overflow-hidden bg-background text-foreground">
+        <ConstellationSky className="pointer-events-none absolute inset-0 h-full w-full opacity-50" />
+        <main className="relative z-10 mx-auto max-w-lg px-6 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-card font-tech text-lg font-bold">NF</div>
+          <h1 className="mt-6 font-tech text-5xl font-semibold tracking-tight">Nightfall</h1>
+          <p className="mt-4 text-muted-foreground">Sign in to open your Nightfall workspace.</p>
+          <Link to="/auth" className="mt-7 inline-flex h-11 items-center rounded-full bg-primary px-6 font-medium text-primary-foreground hover:opacity-90">Sign in</Link>
+        </main>
+      </div>
+    );
+  }
+
+  if (status !== "signed-in") {
+    return <div className="theme-void min-h-screen bg-background" />;
+  }
+
+  const tabs = [
+    { id: "home" as const, label: "Home", icon: Home },
+    { id: "chat" as const, label: "Chat", icon: MessageCircle },
+    { id: "settings" as const, label: "Settings", icon: Settings },
+    ...(isAdmin ? [{ id: "admin" as const, label: "Admin", icon: ShieldCheck }] : []),
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <SiteHeader />
-      <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
-        {status === "signed-out" ? (
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border px-4 py-3">
-            <p className="text-sm text-muted-foreground">Sign in to see your own classes.</p>
-            <Link
-              to="/auth"
-              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+    <div className="theme-void relative flex min-h-screen flex-col overflow-hidden bg-background text-foreground">
+      <ConstellationSky className="pointer-events-none absolute inset-0 h-full w-full opacity-40" />
+      <header className="relative z-20 flex flex-wrap items-center justify-between gap-4 border-b border-border bg-background/70 px-4 py-3 backdrop-blur sm:px-8">
+        <button type="button" onClick={() => setSection("home")} className="flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-card text-xs font-bold tracking-tight ring-1 ring-border">NF</span>
+          <span className="text-lg font-medium">Nightfall</span>
+        </button>
+        <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-1">
+          {tabs.map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setSection(id)}
+              aria-current={section === id ? "page" : undefined}
+              className={section === id
+                ? "flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground"
+                : "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground"}
             >
-              Sign in
-            </Link>
-          </div>
-        ) : profile ? (
-          <p className="mb-6 text-sm text-muted-foreground">Welcome back, {profile.display_name}</p>
-        ) : null}
-
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {CLASSES.map((c) => (
-            <li
-              key={c.name}
-              className="flex h-72 flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-md"
-            >
-              <div className={`${c.banner} relative h-24 px-4 pt-4 text-primary-foreground`}>
-                <p className="truncate text-[1.375rem] leading-tight hover:underline">{c.name}</p>
-                <p className="truncate text-sm">{c.section}</p>
-                <p className="mt-1 truncate text-xs opacity-90">{c.teacher}</p>
-                <span className="absolute right-4 -bottom-9 flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-full bg-muted text-2xl font-medium text-muted-foreground">
-                  {c.teacher.replace(/^\S+\s/, "").charAt(0)}
-                </span>
-              </div>
-              <div className="flex-1" />
-              <div className="flex justify-end gap-1 border-t border-border px-2 py-2 text-muted-foreground">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted">
-                  <TrendingUp className="h-5 w-5" />
-                </span>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-muted">
-                  <FolderClosed className="h-5 w-5" />
-                </span>
-              </div>
-            </li>
+              <Icon className="h-4 w-4" /> {label}
+            </button>
           ))}
-        </ul>
-      </main>
+        </nav>
+        <div className="flex items-center gap-3">
+          <span className="hidden text-sm text-muted-foreground sm:inline">{profile?.display_name}</span>
+          <button type="button" onClick={() => void useAuth().signOut()} className="rounded-full border border-border px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground">Sign out</button>
+        </div>
+      </header>
+
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col">
+        {section === "home" ? (
+          <main className="mx-auto grid w-full max-w-7xl flex-1 items-center px-6 py-12 sm:px-10">
+            <section className="max-w-2xl">
+              <h1 className="text-outline font-tech text-6xl leading-none font-semibold tracking-tight sm:text-7xl xl:text-8xl">Nightfall</h1>
+              <p className="mt-8 max-w-md text-lg leading-relaxed text-muted-foreground sm:text-xl">
+                Welcome back, {profile?.display_name}. Your chat, account settings and community tools are all here.
+              </p>
+              <button type="button" onClick={() => setSection("chat")} className="mt-8 inline-flex h-14 items-center gap-3 rounded-full bg-primary px-7 text-base font-medium text-primary-foreground transition-opacity hover:opacity-90">
+                Open chat <MessageCircle className="h-4 w-4" />
+              </button>
+            </section>
+          </main>
+        ) : section === "chat" ? (
+          <ChatPage embedded />
+        ) : section === "settings" ? (
+          <SettingsPage embedded />
+        ) : isAdmin ? (
+          <AdminPage embedded />
+        ) : null}
+      </div>
     </div>
   );
 }
