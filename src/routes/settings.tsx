@@ -39,7 +39,7 @@ export const Route = createFileRoute("/settings")({
 
 const DISPLAY_NAME_MAX = 40;
 
-function SettingsPage() {
+export function SettingsPage({ embedded = false }: { embedded?: boolean } = {}) {
   const { status, profile, userId } = useAuth();
   const navigate = useNavigate();
   const router = useRouter();
@@ -54,18 +54,20 @@ function SettingsPage() {
 
   function goBack() {
     if (window.history.length > 1) router.history.back();
-    else void navigate({ to: "/hub" });
+    else void navigate({ to: "/" });
   }
 
   return (
     <div className="theme-void relative min-h-screen overflow-hidden bg-background text-foreground">
       <ConstellationSky className="pointer-events-none absolute inset-0 h-full w-full opacity-40" />
-      <HubHeader active="settings" />
+      {!embedded ? <HubHeader active="settings" /> : null}
       <main className="relative z-10 mx-auto max-w-2xl space-y-6 px-4 py-8 sm:px-6">
         <div>
-          <Button variant="ghost" size="sm" className="-ml-2 gap-1.5 text-muted-foreground" onClick={goBack}>
-            <ArrowLeft className="h-4 w-4" /> Back
-          </Button>
+          {!embedded ? (
+            <Button variant="ghost" size="sm" className="-ml-2 gap-1.5 text-muted-foreground" onClick={goBack}>
+              <ArrowLeft className="h-4 w-4" /> Back
+            </Button>
+          ) : null}
           <h1 className="mt-2 flex items-center gap-3 font-tech text-3xl font-semibold">
             <Settings className="h-7 w-7 text-primary" /> Account settings
           </h1>
