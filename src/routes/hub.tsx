@@ -23,8 +23,16 @@ export const Route = createFileRoute("/hub")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: HubPage,
+  component: LegacyRouteRedirect,
 });
+
+function LegacyRouteRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    void navigate({ to: "/", replace: true });
+  }, [navigate]);
+  return null;
+}
 
 const APP_NAME = HUB_NAME;
 
