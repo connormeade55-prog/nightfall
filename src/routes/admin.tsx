@@ -63,13 +63,13 @@ type Person = { id: string; username: string; display_name: string; created_at: 
 const card = "rounded-2xl border border-border bg-card/80 p-5 backdrop-blur";
 const heading = "flex items-center gap-2 font-tech text-lg font-semibold";
 
-function AdminPage() {
+export function AdminPage({ embedded = false }: { embedded?: boolean } = {}) {
   const { status, isAdmin, userId } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (status === "signed-out") void navigate({ to: "/auth", replace: true });
-    if (status === "signed-in" && !isAdmin) void navigate({ to: "/hub", replace: true });
+    if (status === "signed-in" && !isAdmin) void navigate({ to: "/", replace: true });
   }, [status, isAdmin, navigate]);
 
   if (status !== "signed-in" || !isAdmin || !userId) {
@@ -79,7 +79,7 @@ function AdminPage() {
   return (
     <div className="theme-void relative min-h-screen overflow-hidden bg-background text-foreground">
       <ConstellationSky className="pointer-events-none absolute inset-0 h-full w-full opacity-40" />
-      <HubHeader active="admin" />
+      {!embedded ? <HubHeader active="admin" /> : null}
       <main className="relative z-10 mx-auto max-w-6xl space-y-6 px-4 py-8 sm:px-6">
         <div>
           <h1 className="flex items-center gap-3 font-tech text-3xl font-semibold">
