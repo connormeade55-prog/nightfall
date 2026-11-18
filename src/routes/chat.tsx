@@ -80,8 +80,16 @@ export const Route = createFileRoute("/chat")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: ChatPage,
+  component: LegacyRouteRedirect,
 });
+
+function LegacyRouteRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    void navigate({ to: "/", replace: true });
+  }, [navigate]);
+  return null;
+}
 
 type Room = { id: string; name: string; code: string; created_at: string; is_official: boolean };
 type Message = {
