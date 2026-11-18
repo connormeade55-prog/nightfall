@@ -55,8 +55,16 @@ export const Route = createFileRoute("/admin")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: AdminPage,
+  component: LegacyRouteRedirect,
 });
+
+function LegacyRouteRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    void navigate({ to: "/", replace: true });
+  }, [navigate]);
+  return null;
+}
 
 type Person = { id: string; username: string; display_name: string; created_at: string };
 
