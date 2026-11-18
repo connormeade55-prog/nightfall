@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { status, profile, isAdmin } = useAuth();
+  const { status, profile, isAdmin, signOut } = useAuth();
   const [section, setSection] = useState<Section>("home");
 
   if (status === "signed-out") {
@@ -78,7 +78,7 @@ function Index() {
         </nav>
         <div className="flex items-center gap-3">
           <span className="hidden text-sm text-muted-foreground sm:inline">{profile?.display_name}</span>
-          <button type="button" onClick={() => void useAuth().signOut()} className="rounded-full border border-border px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground">Sign out</button>
+          <button type="button" onClick={() => void signOut()} className="rounded-full border border-border px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground">Sign out</button>
         </div>
       </header>
 
