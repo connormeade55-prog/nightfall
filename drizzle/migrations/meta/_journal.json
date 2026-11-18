@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794237002094,
+      "tag": "0000_create_profiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794270176363,
+      "tag": "0001_create_chat_rooms",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794428859878,
+      "tag": "0002_admin_tools",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794475721285,
+      "tag": "0003_reactions_delete_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794475758004,
+      "tag": "0004_retire_reserved_admin_trigger",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794557994262,
+      "tag": "0005_attachments_custom_roles",
+      "breakpoints": true
+    }
+  ]
+}
