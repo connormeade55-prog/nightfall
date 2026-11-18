@@ -144,7 +144,7 @@ const reactionsQuery = (roomId: string) =>
     },
   });
 
-function ChatPage() {
+export function ChatPage({ embedded = false }: { embedded?: boolean } = {}) {
   const { status, userId } = useAuth();
   const navigate = useNavigate();
 
@@ -157,9 +157,11 @@ function ChatPage() {
   }
 
   return (
-    <div className="theme-void relative flex h-screen flex-col overflow-hidden bg-background text-foreground">
+    <div className={embedded
+      ? "theme-void relative flex min-h-[36rem] flex-1 flex-col overflow-hidden bg-background text-foreground"
+      : "theme-void relative flex h-screen flex-col overflow-hidden bg-background text-foreground"}>
       <ConstellationSky className="pointer-events-none absolute inset-0 h-full w-full opacity-60" />
-      <HubHeader active="chat" />
+      {!embedded ? <HubHeader active="chat" /> : null}
       <ChatShell userId={userId} />
     </div>
   );
