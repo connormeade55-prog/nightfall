@@ -34,8 +34,16 @@ export const Route = createFileRoute("/settings")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: SettingsPage,
+  component: LegacyRouteRedirect,
 });
+
+function LegacyRouteRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    void navigate({ to: "/", replace: true });
+  }, [navigate]);
+  return null;
+}
 
 const DISPLAY_NAME_MAX = 40;
 
