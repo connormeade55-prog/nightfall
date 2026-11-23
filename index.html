@@ -202,9 +202,9 @@
       event.preventDefault();
       const query = $('#searchInput').value.trim();
       if (!query) { $('#searchInput').focus(); return; }
-      const looksLikeUrl = /^(https?:\\/\\/|[\\w-]+\\.[a-z]{2,})(\\/.*)?$/i.test(query);
+      const looksLikeUrl = /^(https?:\/\/|[\w-]+\.[a-z]{2,})(\/.*)?$/i.test(query);
       if (looksLikeUrl) {
-        const url = /^https?:\\/\\//i.test(query) ? query : 'https://' + query;
+        const url = /^https?:\/\//i.test(query) ? query : 'https://' + query;
         window.location.href = url;
         return;
       }
