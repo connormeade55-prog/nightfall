@@ -45,6 +45,16 @@
     .shooting-star.one{top:22%;left:58%;animation-delay:2s}.shooting-star.two{top:64%;left:14%;animation-delay:8s}
     @keyframes shoot{0%,82%,100%{opacity:0;transform:translate(0,0) rotate(-28deg)}84%{opacity:.9}90%{opacity:0;transform:translate(-150px,75px) rotate(-28deg)}}
     @media(prefers-reduced-motion:reduce){.scene:before,.scene:after,.spark,.shooting-star{animation:none!important}}
+    .cursor-hole{position:fixed;z-index:5;left:0;top:0;width:104px;height:104px;pointer-events:none;opacity:0;transform:translate3d(-50%,-50%,0);will-change:transform,opacity;transition:opacity .25s ease;mix-blend-mode:screen}
+    .cursor-hole.visible{opacity:1}
+    .hole-aura{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,#8c5cff20 0%,#6d49d022 38%,transparent 72%);filter:blur(7px)}
+    .hole-disk{position:absolute;left:2px;top:31px;width:100px;height:42px;border-radius:50%;background:conic-gradient(from 10deg,#9f73ff00,#9d75ff 13%,#f0baff 24%,#6846d9 38%,#26134e 50%,#bb83ff 67%,#f4c4ff 78%,#8156ee 89%,#9f73ff00);filter:drop-shadow(0 0 7px #9b68ffcc) drop-shadow(0 0 17px #7145d888);animation:holeSpin 3.5s linear infinite}
+    .hole-disk:after{content:"";position:absolute;inset:8px 12px;border-radius:50%;background:#05020c;box-shadow:inset 0 0 8px #9b69ff88}
+    .hole-core{position:absolute;left:22px;top:22px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 48% 48%,#000 0%,#000 58%,#10091e 70%,#5c3a9c 78%,#a87cff 83%,transparent 87%);box-shadow:0 0 12px #b88cff88,0 0 28px #8653d966}
+    .hole-core:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#000;box-shadow:0 0 15px 8px #000}
+    .hole-streak{position:absolute;left:50%;top:50%;width:118px;height:1px;transform:translate(-50%,-50%) rotate(-32deg);background:linear-gradient(90deg,transparent,#c5a3ff99,transparent);filter:blur(.5px)}
+    @keyframes holeSpin{to{transform:rotate(360deg)}}
+    @media(pointer:coarse),(prefers-reduced-motion:reduce){.cursor-hole{display:none}}
     main{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px}
     .hero{width:min(100%,590px);display:flex;flex-direction:column;align-items:center;transform:translateY(-3px)}
     .wordmark{height:155px;display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:4px;white-space:nowrap}
@@ -124,6 +134,8 @@
   </style>
 </head>
 <body>
+  <div class="cursor-hole" id="cursorHole" aria-hidden="true"><div class="hole-aura"></div><div class="hole-disk"></div><div class="hole-core"></div><div class="hole-streak"></div></div>
+
   <div class="scene" aria-hidden="true">
     <div class="planet planet-one"></div>
     <div class="planet planet-two"></div>
@@ -187,6 +199,34 @@
   </div>
 
   <script>
+    // A small, decorative black hole smoothly follows the mouse.
+    const cursorHole = document.getElementById('cursorHole');
+    if (cursorHole && !window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2;
+      let currentX = targetX, currentY = targetY;
+      let active = false;
+      window.addEventListener('pointermove', event => {
+        if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+        targetX = event.clientX;
+        targetY = event.clientY;
+        active = true;
+        cursorHole.classList.add('visible');
+      }, {passive:true});
+      window.addEventListener('pointerout', event => {
+        if (!event.relatedTarget) {
+          active = false;
+          cursorHole.classList.remove('visible');
+        }
+      });
+      const followHole = () => {
+        currentX += (targetX - currentX) * 0.16;
+        currentY += (targetY - currentY) * 0.16;
+        cursorHole.style.transform = 'translate3d(' + currentX + 'px,' + currentY + 'px,0) translate(-50%,-50%)';
+        requestAnimationFrame(followHole);
+      };
+      requestAnimationFrame(followHole);
+    }
+
     const $ = (s) => document.querySelector(s);
     let currentEngine = 'duck';
     const engineIcons = {duck:'◉',google:'G',bing:'b'};
