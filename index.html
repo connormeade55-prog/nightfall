@@ -26,24 +26,25 @@
     .top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
     .icon-button{width:43px;height:43px;border:0;border-radius:13px;background:#0d0d0f;color:#bcbcc1;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,transform .2s}
     .icon-button:hover{background:#1a1a1e;color:#fff;transform:translateY(-1px)}
-    .scene{position:fixed;inset:0;overflow:hidden;pointer-events:none}
-    .cloud{--scale:1;position:absolute;width:76px;height:30px;opacity:.24;filter:drop-shadow(0 2px 4px #555);animation:drift var(--duration,75s) ease-in-out infinite alternate}
-    .cloud svg{width:100%;height:100%;overflow:visible}
-    .cloud path{fill:#77777c;stroke:#96969b;stroke-width:1.5}
-    .c1{left:27.5%;top:19%;--scale:.56;transform:scale(.56);--duration:82s}
-    .c2{left:58%;top:27%;transform:scale(1.02);--duration:95s}
-    .c3{left:80%;top:37%;transform:scale(.9);--duration:73s}
-    .c4{left:16%;top:45%;transform:scale(.42);--duration:88s}
-    .c5{left:41%;top:65%;transform:scale(1.5);--duration:110s}
-    .c6{left:70%;top:70%;transform:scale(.66);--duration:79s}
-    .c7{left:54%;top:78%;transform:scale(1.12);--duration:90s}
-    .c8{left:89%;top:53%;transform:scale(.67);--duration:102s}
-    .c9{left:9%;top:81%;transform:scale(.55);--duration:86s}
-    .c10{left:92%;top:29%;transform:scale(.58);--duration:97s}
-    .c11{left:68%;top:13%;transform:scale(.43);--duration:91s}
-    @keyframes drift{from{translate:-10px 0}to{translate:22px 9px}}
-    .spark{position:absolute;width:2px;height:2px;border-radius:50%;background:#aaa;opacity:.12;box-shadow:0 0 8px 2px #aaa}
-    .s1{left:19%;top:24%}.s2{left:76%;top:19%}.s3{left:87%;top:72%}.s4{left:31%;top:79%}.s5{left:62%;top:48%}
+    .scene{position:fixed;inset:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,#080610 0%,#020207 48%,#000 78%)}
+    .scene:before,.scene:after{content:"";position:absolute;inset:-20%;pointer-events:none}
+    .scene:before{opacity:.72;background-image:
+      radial-gradient(1px 1px at 7% 13%,#fff 99%,transparent),radial-gradient(1px 1px at 18% 72%,#d9d7ff 99%,transparent),radial-gradient(2px 2px at 29% 34%,#fff 99%,transparent),radial-gradient(1px 1px at 41% 81%,#fff 99%,transparent),radial-gradient(1px 1px at 56% 16%,#d6d2ff 99%,transparent),radial-gradient(2px 2px at 67% 58%,#fff 99%,transparent),radial-gradient(1px 1px at 78% 29%,#fff 99%,transparent),radial-gradient(1px 1px at 91% 77%,#d9d7ff 99%,transparent);
+      background-size:290px 240px;animation:starDrift 150s linear infinite}
+    .scene:after{opacity:.5;background:radial-gradient(ellipse at 14% 24%,#30205b55 0%,transparent 28%),radial-gradient(ellipse at 84% 68%,#123b6950 0%,transparent 30%),radial-gradient(ellipse at 75% 12%,#4a205044 0%,transparent 22%);filter:blur(34px);animation:nebulaPulse 18s ease-in-out infinite alternate}
+    @keyframes starDrift{from{transform:translateY(0)}to{transform:translateY(240px)}}
+    @keyframes nebulaPulse{from{opacity:.28;transform:scale(1)}to{opacity:.62;transform:scale(1.08)}}
+    .spark{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.5;box-shadow:0 0 9px 2px #aaaaff;animation:twinkle 3.5s ease-in-out infinite alternate}
+    .s1{left:19%;top:24%}.s2{left:76%;top:19%;animation-delay:1s}.s3{left:87%;top:72%;animation-delay:2s}.s4{left:31%;top:79%;animation-delay:.5s}.s5{left:62%;top:48%;animation-delay:1.5s}
+    @keyframes twinkle{from{opacity:.18;transform:scale(.7)}to{opacity:.9;transform:scale(1.5)}}
+    .planet{position:absolute;border-radius:50%;opacity:.72;box-shadow:inset -18px -12px 25px #000b,0 0 38px #7760bb22}
+    .planet-one{width:112px;height:112px;right:8%;top:18%;background:radial-gradient(circle at 30% 28%,#c7b4df,#665b89 40%,#29243f 75%);opacity:.32}
+    .planet-one:after{content:"";position:absolute;width:160px;height:42px;border:5px solid #a99acb66;border-top-color:#d5c9ef88;border-bottom-color:#8e80b855;border-radius:50%;left:-28px;top:35px;transform:rotate(-22deg)}
+    .planet-two{width:48px;height:48px;left:9%;bottom:18%;background:radial-gradient(circle at 32% 30%,#b9d8e7,#416a84 54%,#182b43);opacity:.35}
+    .shooting-star{position:absolute;width:110px;height:1px;background:linear-gradient(90deg,transparent,#c7c4ff,transparent);filter:drop-shadow(0 0 4px #a99aff);transform:rotate(-28deg);opacity:0;animation:shoot 12s linear infinite}
+    .shooting-star.one{top:22%;left:58%;animation-delay:2s}.shooting-star.two{top:64%;left:14%;animation-delay:8s}
+    @keyframes shoot{0%,82%,100%{opacity:0;transform:translate(0,0) rotate(-28deg)}84%{opacity:.9}90%{opacity:0;transform:translate(-150px,75px) rotate(-28deg)}}
+    @media(prefers-reduced-motion:reduce){.scene:before,.scene:after,.spark,.shooting-star{animation:none!important}}
     main{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px}
     .hero{width:min(100%,590px);display:flex;flex-direction:column;align-items:center;transform:translateY(-3px)}
     .wordmark{height:155px;display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:4px;white-space:nowrap}
@@ -124,17 +125,10 @@
 </head>
 <body>
   <div class="scene" aria-hidden="true">
-    <div class="cloud c1"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c2"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c3"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c4"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c5"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c6"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c7"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c8"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c9"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c10"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
-    <div class="cloud c11"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="planet planet-one"></div>
+    <div class="planet planet-two"></div>
+    <div class="shooting-star one"></div>
+    <div class="shooting-star two"></div>
     <i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i><i class="spark s4"></i><i class="spark s5"></i>
   </div>
 
