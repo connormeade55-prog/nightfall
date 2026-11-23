@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>Zenith</title>
+  <meta name="description" content="Zenith — your space for studies, movies, apps, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#000;--panel:#0b0b0d;--panel2:#111114;--muted:#929296;--text:#f7f7f8;--line:#202024}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;width:100%;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+    body{min-height:100vh;overflow:hidden}
+    button,input{font:inherit}
+    button{color:inherit}
+    .topbar{position:fixed;z-index:20;left:0;right:0;top:0;height:72px;padding:0 18px;display:flex;align-items:center;gap:34px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:700;font-size:19px;letter-spacing:-.5px}
+    .brand-mark{width:30px;height:30px;border:1px solid #292333;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#48316c,#100d17 68%);font-size:18px;box-shadow:0 0 15px #7a49b522}
+    .nav{display:flex;align-items:center;gap:25px}
+    .nav a{color:#c6c6ca;text-decoration:none;font-size:14px;display:flex;align-items:center;gap:8px;transition:color .2s}
+    .nav a:hover,.nav a.active{color:#fff}
+    .nav svg,.top-actions svg,.shortcut svg,.footer-pill svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+    .icon-button{width:43px;height:43px;border:0;border-radius:13px;background:#0d0d0f;color:#bcbcc1;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+    .icon-button:hover{background:#1a1a1e;color:#fff;transform:translateY(-1px)}
+    .scene{position:fixed;inset:0;overflow:hidden;pointer-events:none}
+    .cloud{--scale:1;position:absolute;width:76px;height:30px;opacity:.24;filter:drop-shadow(0 2px 4px #555);animation:drift var(--duration,75s) ease-in-out infinite alternate}
+    .cloud svg{width:100%;height:100%;overflow:visible}
+    .cloud path{fill:#77777c;stroke:#96969b;stroke-width:1.5}
+    .c1{left:27.5%;top:19%;--scale:.56;transform:scale(.56);--duration:82s}
+    .c2{left:58%;top:27%;transform:scale(1.02);--duration:95s}
+    .c3{left:80%;top:37%;transform:scale(.9);--duration:73s}
+    .c4{left:16%;top:45%;transform:scale(.42);--duration:88s}
+    .c5{left:41%;top:65%;transform:scale(1.5);--duration:110s}
+    .c6{left:70%;top:70%;transform:scale(.66);--duration:79s}
+    .c7{left:54%;top:78%;transform:scale(1.12);--duration:90s}
+    .c8{left:89%;top:53%;transform:scale(.67);--duration:102s}
+    .c9{left:9%;top:81%;transform:scale(.55);--duration:86s}
+    .c10{left:92%;top:29%;transform:scale(.58);--duration:97s}
+    .c11{left:68%;top:13%;transform:scale(.43);--duration:91s}
+    @keyframes drift{from{translate:-10px 0}to{translate:22px 9px}}
+    .spark{position:absolute;width:2px;height:2px;border-radius:50%;background:#aaa;opacity:.12;box-shadow:0 0 8px 2px #aaa}
+    .s1{left:19%;top:24%}.s2{left:76%;top:19%}.s3{left:87%;top:72%}.s4{left:31%;top:79%}.s5{left:62%;top:48%}
+    main{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px}
+    .hero{width:min(100%,590px);display:flex;flex-direction:column;align-items:center;transform:translateY(-3px)}
+    .wordmark{height:155px;display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:4px;white-space:nowrap}
+    .wordmark span{font-family:Allura,"Brush Script MT",cursive;font-size:clamp(90px,10vw,142px);line-height:1;color:#fafafa;font-weight:400;letter-spacing:1px;text-shadow:0 1px 1px #fff}
+    .mascot{width:59px;height:78px;position:relative;display:grid;place-items:center;transform:rotate(5deg);margin-top:8px}
+    .mascot img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 8px #20c9c533)}
+    .mascot-fallback{font-size:49px;filter:drop-shadow(0 3px 8px #37d5d544)}
+    .search-shell{width:min(100%,590px);background:#0b0b0d;border-radius:30px 30px 39px 39px;padding:10px 12px 13px;box-shadow:0 8px 45px #0008}
+    .search-row{height:45px;display:flex;align-items:center;gap:12px}
+    .engine-wrap{position:relative;flex:none}
+    .engine{border:0;background:transparent;display:flex;align-items:center;gap:5px;padding:5px 8px;cursor:pointer;color:#aaa}
+    .engine-icon{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#fff;font-size:13px;color:#e65a36}
+    .engine svg{width:12px;height:12px;stroke:currentColor;fill:none}
+    .engine-menu{display:none;position:absolute;z-index:30;left:0;top:36px;background:#17171b;border:1px solid #2a2a30;border-radius:12px;padding:6px;min-width:155px;box-shadow:0 12px 35px #000b}
+    .engine-menu.open{display:block}
+    .engine-menu button{display:block;width:100%;text-align:left;background:none;border:0;border-radius:8px;padding:9px 11px;color:#ccc;font-size:13px;cursor:pointer}
+    .engine-menu button:hover{background:#29292f;color:#fff}
+    #searchInput{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#f5f5f5;font-size:16px;padding:0 3px}
+    #searchInput::placeholder{color:#77777c}
+    .submit-search{height:34px;width:34px;border:0;border-radius:50%;background:#19191d;color:#aaa;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+    .submit-search:hover{background:#303036;color:white}
+    .submit-search svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+    .shortcuts{display:flex;align-items:center;justify-content:center;gap:clamp(17px,4.4vw,48px);padding:12px 5px 0}
+    .shortcut{border:0;background:transparent;color:#aaa;display:flex;align-items:center;gap:7px;font-size:13px;padding:4px 2px;cursor:pointer;transition:color .2s}
+    .shortcut:hover{color:#fff}
+    .shortcut svg{width:17px;height:17px}
+    .status{position:fixed;z-index:10;left:18px;bottom:17px;color:#aaa;font-size:11px}
+    .footer-pill{position:fixed;z-index:20;right:18px;bottom:17px;display:flex;align-items:center;background:#0d0d0f;border-radius:28px;padding:9px 11px;color:#aaa}
+    .footer-pill button{border:0;background:transparent;color:inherit;display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:12px;font-weight:600;cursor:pointer}
+    .footer-pill button:hover{color:#fff}
+    .footer-pill .divider{width:1px;height:20px;background:#29292d}
+    .footer-pill svg{width:17px;height:17px}
+    .modal-backdrop{position:fixed;inset:0;z-index:50;background:#000a;display:none;align-items:center;justify-content:center;padding:20px}
+    .modal-backdrop.open{display:flex}
+    .modal{width:min(100%,410px);background:#111114;border:1px solid #29292e;border-radius:18px;padding:22px;box-shadow:0 24px 80px #000c}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .modal h2{font-size:17px;margin:0;font-weight:600}
+    .close-modal{border:0;background:#202025;color:#aaa;width:30px;height:30px;border-radius:9px;cursor:pointer;font-size:18px}
+    .modal p{font-size:13px;line-height:1.7;color:#aaa;margin:0}
+    .modal-actions{display:flex;gap:9px;margin-top:18px}
+    .modal-actions button{background:#24242a;border:0;border-radius:9px;padding:10px 14px;color:#eee;font-size:13px;cursor:pointer}
+    .modal-actions button.primary{background:#f1f1f1;color:#111}
+    .setting-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #29292e;color:#ccc;font-size:13px}
+    .setting-row:last-child{border:0}
+    .setting-row input{accent-color:#aaa}
+    @media(max-width:600px){
+      body{overflow:auto}
+      .topbar{height:64px;padding:0 12px;gap:18px}
+      .brand{font-size:17px}.brand-mark{width:28px;height:28px}
+      .nav{gap:13px}.nav a{font-size:12px;gap:5px}.nav svg{width:15px;height:15px}
+      .top-actions{gap:5px}.icon-button{width:35px;height:35px;border-radius:11px}
+      .icon-button svg{width:17px;height:17px}
+      main{padding:60px 16px 90px}
+      .hero{transform:translateY(-15px)}
+      .wordmark{height:125px;gap:7px;margin-bottom:7px}
+      .wordmark span{font-size:clamp(78px,20vw,112px)}
+      .mascot{width:43px;height:60px}
+      .mascot-fallback{font-size:38px}
+      .search-shell{padding:8px 9px 12px}
+      .search-row{height:43px;gap:6px}
+      #searchInput{font-size:14px}
+      .shortcuts{gap:clamp(12px,4vw,23px)}
+      .shortcut{font-size:11px;gap:4px}.shortcut svg{width:15px;height:15px}
+      .footer-pill{right:10px;bottom:10px;padding:5px 6px}
+      .footer-pill button{font-size:10px;padding:7px 8px}
+      .status{left:12px;bottom:17px}
+    }
+    @media(max-width:380px){.nav{gap:9px}.topbar{gap:12px}.nav a{font-size:11px}.shortcuts{gap:10px}.shortcut{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <div class="cloud c1"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c2"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c3"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c4"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c5"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c6"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c7"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c8"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c9"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c10"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <div class="cloud c11"><svg viewBox="0 0 100 40"><path d="M12 29C2 25 8 12 20 13c3-13 23-13 29-3 10-10 28-3 28 8 15 0 17 17 3 19H20C7 37 3 32 12 29Z"/></svg></div>
+    <i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i><i class="spark s4"></i><i class="spark s5"></i>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Zenith home"><span class="brand-mark">✦</span><span>Zenith</span></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#studies" data-panel="Studies"><svg viewBox="0 0 24 24"><path d="M3 8.5a2 2 0 0 1 2-2h3l2 2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 11v5l5-2.5z"/></svg>Studies</a>
+      <a href="#movies" data-panel="Movies"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="m7 5 3 5m3-5 3 5m3-5 2 3"/></svg>Movies</a>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-button" aria-label="Messages" data-modal="messages"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v9a2.5 2.5 0 0 1-2.5 2.5H9l-5 4z"/></svg></button>
+      <button class="icon-button" aria-label="Profile" data-modal="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg></button>
+      <button class="icon-button" aria-label="Settings" data-modal="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.2 1-1.5 2.6-1.5-.6a8 8 0 0 1-1.6.9l-.3 1.6h-3l-.3-1.6a8 8 0 0 1-1.6-.9l-1.5.6-1.5-2.6 1.2-1a8 8 0 0 1 0-1.9l-1.2-1 1.5-2.6 1.5.6a8 8 0 0 1 1.6-.9l.3-1.6h3l.3 1.6a8 8 0 0 1 1.6.9l1.5-.6 1.5 2.6-1.2 1a8 8 0 0 1 0 1.8Z" transform="translate(-1 -1) scale(1.08)"/></svg></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Zenith search">
+      <div class="wordmark"><span>Zenith</span><div class="mascot" aria-label="Zenith mascot"><span class="mascot-fallback">🩵</span></div></div>
+      <form class="search-shell" id="searchForm">
+        <div class="search-row">
+          <div class="engine-wrap">
+            <button class="engine" type="button" id="engineButton" aria-label="Choose search engine"><span class="engine-icon" id="engineIcon">◉</span><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+            <div class="engine-menu" id="engineMenu">
+              <button type="button" data-engine="duck">DuckDuckGo</button>
+              <button type="button" data-engine="google">Google</button>
+              <button type="button" data-engine="bing">Bing</button>
+            </div>
+          </div>
+          <input id="searchInput" type="text" placeholder="Search Zenith or enter a URL..." autocomplete="off" aria-label="Search Zenith or enter a URL">
+          <button class="submit-search" type="submit" aria-label="Search"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+        </div>
+        <div class="shortcuts">
+          <button class="shortcut" type="button" data-panel="Studies"><svg viewBox="0 0 24 24"><path d="M3 8.5a2 2 0 0 1 2-2h3l2 2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 11v5l5-2.5z"/></svg>Studies</button>
+          <button class="shortcut" type="button" data-panel="Movies"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="m7 5 3 5m3-5 3 5m3-5 2 3"/></svg>Movies</button>
+          <button class="shortcut" type="button" data-panel="Apps"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Apps</button>
+          <button class="shortcut" type="button" data-panel="AI"><svg viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>AI</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div class="status">2 online</div>
+  <div class="footer-pill">
+    <button type="button" data-modal="music"><svg viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="13" width="4" height="7" rx="2"/><rect x="17" y="13" width="4" height="7" rx="2"/></svg>Music</button>
+    <span class="divider"></span>
+    <button type="button" data-modal="terms"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 13h8m-8 4h8"/></svg>Terms of Service</button>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <section class="modal">
+      <div class="modal-head"><h2 id="modalTitle">Zenith</h2><button class="close-modal" id="closeModal" aria-label="Close">×</button></div>
+      <div id="modalBody"></div>
+      <div class="modal-actions"><button class="primary" id="modalOkay">Okay</button></div>
+    </section>
+  </div>
+
+  <script>
+    const $ = (s) => document.querySelector(s);
+    let currentEngine = 'duck';
+    const engineIcons = {duck:'◉',google:'G',bing:'b'};
+    $('#engineButton').addEventListener('click', () => $('#engineMenu').classList.toggle('open'));
+    document.querySelectorAll('[data-engine]').forEach(button => button.addEventListener('click', () => {
+      currentEngine = button.dataset.engine;
+      $('#engineIcon').textContent = engineIcons[currentEngine];
+      $('#engineMenu').classList.remove('open');
+    }));
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.engine-wrap')) $('#engineMenu').classList.remove('open');
+    });
+    $('#searchForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const query = $('#searchInput').value.trim();
+      if (!query) { $('#searchInput').focus(); return; }
+      const looksLikeUrl = /^(https?:\\/\\/|[\\w-]+\\.[a-z]{2,})(\\/.*)?$/i.test(query);
+      if (looksLikeUrl) {
+        const url = /^https?:\\/\\//i.test(query) ? query : 'https://' + query;
+        window.location.href = url;
+        return;
+      }
+      const engines = {duck:'https://duckduckgo.com/?q=',google:'https://www.google.com/search?q=',bing:'https://www.bing.com/search?q='};
+      window.location.href = engines[currentEngine] + encodeURIComponent(query);
+    });
+
+    const modal = $('#modalBackdrop');
+    const content = {
+      messages:['Messages','Your Zenith messages will appear here.'],
+      profile:['Profile','You are browsing Zenith as a guest. Sign-in features can be connected here later.'],
+      settings:['Settings','<div class="setting-row"><span>Reduce animations</span><input type="checkbox" id="reduceMotion"></div><div class="setting-row"><span>Dark appearance</span><input type="checkbox" checked disabled></div><div class="setting-row"><span>Search engine</span><span> '+ 'DuckDuckGo' +'</span></div>'],
+      music:['Music','Music controls will be available here.'],
+      terms:['Terms of Service','By using this demo homepage, you agree to use the site responsibly and follow applicable laws and the terms of any linked services. Zenith is a front-end demonstration and does not provide or host third-party content.'],
+      Studies:['Studies','Your study tools and learning resources can be added here.'],
+      Movies:['Movies','Your movie page can be connected here.'],
+      Apps:['Apps','Your apps and shortcuts can be added here.'],
+      AI:['AI','Your AI tools can be connected here.']
+    };
+    function openModal(key){
+      const item = content[key] || ['Zenith', ''];
+      $('#modalTitle').textContent = item[0];
+      $('#modalBody').innerHTML = '<p>' + item[1] + '</p>';
+      modal.classList.add('open');
+      $('#modalOkay').onclick = closeModal;
+      const reduce = $('#reduceMotion');
+      if(reduce) reduce.addEventListener('change', () => document.documentElement.style.setProperty('--motion-setting', reduce.checked ? '0' : '1'));
+    }
+    function closeModal(){modal.classList.remove('open')}
+    $('#closeModal').addEventListener('click',closeModal);
+    $('#modalOkay').addEventListener('click',closeModal);
+    modal.addEventListener('click',event=>{if(event.target===modal)closeModal()});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'){closeModal();$('#engineMenu').classList.remove('open')}});
+    document.querySelectorAll('[data-modal]').forEach(button=>button.addEventListener('click',()=>openModal(button.dataset.modal)));
+    document.querySelectorAll('[data-panel]').forEach(button=>button.addEventListener('click',event=>{event.preventDefault();openModal(button.dataset.panel)}));
+    document.querySelector('.brand').addEventListener('click',event=>{event.preventDefault();closeModal();window.scrollTo({top:0,behavior:'smooth'})});
+  </script>
+</body>
+</html>
