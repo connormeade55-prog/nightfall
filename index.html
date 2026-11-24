@@ -323,6 +323,72 @@
       window.location.href = engines[currentEngine] + encodeURIComponent(query);
     });
 
+    function openSettings(){
+      document.body.classList.add('settings-open');
+      if(location.hash!=='#settings') history.replaceState(null,'',location.pathname+location.search+'#settings');
+    }
+    function closeSettings(){
+      document.body.classList.remove('settings-open');
+      history.replaceState(null,'',location.pathname+location.search);
+    }
+    $('#settingsBack').addEventListener('click',closeSettings);
+    document.querySelectorAll('[data-settings-target]').forEach(button=>button.addEventListener('click',()=>{
+      document.querySelectorAll('[data-settings-target]').forEach(item=>item.classList.remove('active'));
+      button.classList.add('active');
+      document.getElementById(button.dataset.settingsTarget).scrollIntoView({behavior:document.body.classList.contains('reduce-motion')?'auto':'smooth',block:'start'});
+    }));
+    document.querySelectorAll('[data-hover]').forEach(button=>button.addEventListener('click',()=>{
+      document.body.classList.remove('hover-white','hover-blue','hover-purple','hover-silver');
+      document.body.classList.add('hover-'+button.dataset.hover);
+      document.querySelectorAll('[data-hover]').forEach(item=>item.classList.toggle('active',item===button));
+      try{localStorage.setItem('nightfall-hover',button.dataset.hover)}catch(e){}
+    }));
+    const reduceAnimations=$('#reduceAnimations');
+    reduceAnimations.addEventListener('change',()=>{
+      document.body.classList.toggle('reduce-motion',reduceAnimations.checked);
+      try{localStorage.setItem('nightfall-reduce-motion',reduceAnimations.checked?'1':'0')}catch(e){}
+    });
+    const searchProvider=$('#searchProvider');
+    searchProvider.addEventListener('change',()=>{
+      currentEngine=searchProvider.value;
+      try{localStorage.setItem('nightfall-search-provider',currentEngine)}catch(e){}
+    });
+    const pageEngine=$('#pageEngine');
+    pageEngine.addEventListener('change',()=>{try{localStorage.setItem('nightfall-page-engine',pageEngine.value)}catch(e){}});
+    const tabAppearance=$('#tabAppearance'),customTabTitle=$('#customTabTitle'),tabPreviewTitle=$('#tabPreviewTitle');
+    function updateTabTitle(){
+      const title=customTabTitle.value.trim() || (tabAppearance.value==='Custom'?'Nightfall':tabAppearance.value);
+      tabPreviewTitle.textContent=title;document.title=title;
+      try{localStorage.setItem('nightfall-tab-title',title);localStorage.setItem('nightfall-tab-preset',tabAppearance.value)}catch(e){}
+    }
+    tabAppearance.addEventListener('change',updateTabTitle);
+    customTabTitle.addEventListener('input',updateTabTitle);
+    $('#resetAppearance').addEventListener('click',()=>{
+      document.body.classList.remove('hover-blue','hover-purple','hover-silver','reduce-motion');
+      document.body.classList.add('hover-white');
+      document.querySelectorAll('[data-hover]').forEach(item=>item.classList.toggle('active',item.dataset.hover==='white'));
+      reduceAnimations.checked=false;tabAppearance.value='Nightfall';customTabTitle.value='';updateTabTitle();
+      try{['nightfall-hover','nightfall-reduce-motion','nightfall-tab-title','nightfall-tab-preset'].forEach(key=>localStorage.removeItem(key))}catch(e){}
+    });
+    $('#openBlank').addEventListener('click',()=>window.open('about:blank','_blank','noopener'));
+    try{
+      const savedHover=localStorage.getItem('nightfall-hover');
+      if(savedHover&&['white','blue','purple','silver'].includes(savedHover)){
+        document.body.classList.add('hover-'+savedHover);
+        document.querySelectorAll('[data-hover]').forEach(item=>item.classList.toggle('active',item.dataset.hover===savedHover));
+      }
+      const savedReduce=localStorage.getItem('nightfall-reduce-motion')==='1';
+      reduceAnimations.checked=savedReduce;document.body.classList.toggle('reduce-motion',savedReduce);
+      const savedProvider=localStorage.getItem('nightfall-search-provider');
+      if(savedProvider&&['duck','google','bing'].includes(savedProvider)){searchProvider.value=savedProvider;currentEngine=savedProvider;}
+      const savedPageEngine=localStorage.getItem('nightfall-page-engine');if(savedPageEngine)pageEngine.value=savedPageEngine;
+      const savedTitle=localStorage.getItem('nightfall-tab-title');
+      if(savedTitle){customTabTitle.value=savedTitle;tabPreviewTitle.textContent=savedTitle;document.title=savedTitle;}
+      const savedPreset=localStorage.getItem('nightfall-tab-preset');
+      if(savedPreset&&['Nightfall','Black','Blank','Custom'].includes(savedPreset))tabAppearance.value=savedPreset;
+    }catch(e){}
+    if(location.hash==='#settings')openSettings();
+
     const modal = $('#modalBackdrop');
     const content = {
       messages:['Messages','Your Nightfall messages will appear here.'],
