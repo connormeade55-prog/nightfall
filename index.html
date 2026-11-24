@@ -80,6 +80,9 @@
     .settings-reset{display:flex;align-items:center;gap:8px;border:1px solid #29292e;border-radius:11px;background:transparent;color:#eee;padding:11px 13px;font-size:13px;font-weight:600;cursor:pointer}
     .settings-reset:hover{background:#17171a}.settings-back{position:fixed;z-index:36;left:0;top:50%;transform:translateY(-50%);width:25px;height:52px;border:0;border-radius:0 14px 14px 0;background:#17171a;color:#bbb;font-size:22px;cursor:pointer}
     .settings-hint{font-size:12px;color:#85858b;line-height:1.6;padding:12px 0}
+    .nightfall-mark{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#a78bfa,#292036 62%,#0a0a0b);color:#fff;font-size:21px;flex:none}
+    .license-pill{border:1px solid #29292e;border-radius:8px;padding:7px 10px;font-size:11px;color:#ddd;white-space:nowrap}
+
     body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important} body.reduce-motion .cursor-hole{display:none!important;opacity:0!important}
     @media(max-width:760px){.settings-layout{width:calc(100% - 28px);margin:18px auto 28px;grid-template-columns:1fr;gap:15px}.settings-sidebar{position:static;padding:0}.settings-sidebar h1{font-size:27px;margin-bottom:13px}.settings-nav{display:flex;overflow-x:auto;gap:5px;padding-bottom:5px}.settings-nav button{white-space:nowrap;font-size:12px;padding:9px}.settings-card{padding:14px 13px 6px}.settings-row{gap:10px}.settings-copy span{max-width:260px}.color-choice{padding:7px 6px;font-size:10px}.settings-control{gap:4px}.settings-select{width:120px}.settings-input{width:140px}}
     @media(max-width:430px){.settings-row{align-items:flex-start;flex-direction:column}.settings-control{align-self:flex-end}.settings-copy span{max-width:none}.settings-reset{padding:9px 10px}}
@@ -254,8 +257,17 @@
           <div class="settings-row"><div class="settings-copy"><strong>Custom title</strong><span>Leave blank to use the selected preset.</span></div><input class="settings-input" id="customTabTitle" placeholder="Custom tab title" maxlength="50"></div>
           <div class="settings-row"><div class="settings-copy"><strong>Restore tab defaults</strong></div><button class="settings-reset" id="resetAppearance">↶　Reset appearance</button></div>
         </section>
-        <section class="settings-card" id="about-blank"><div class="settings-card-title"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>About:blank</div><div class="settings-row"><div class="settings-copy"><strong>Open About:blank</strong><span>Open a blank browser page in a new tab.</span></div><button class="settings-reset" id="openBlank">Open page ↗</button></div></section>
-        <section class="settings-card" id="about-nightfall"><div class="settings-card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>About Nightfall</div><div class="settings-hint">Nightfall is your space for browsing, studying, and exploring. This settings page is part of the Nightfall homepage.</div></section>
+        <section class="settings-card" id="about-blank">
+          <div class="settings-card-title"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>About:blank</div>
+          <div class="settings-row"><div class="settings-copy"><strong>Cloak the tab in about:blank</strong><span>Open this copy of Nightfall inside a separate tab. Browser popup rules still apply.</span></div><input class="toggle" type="checkbox" id="cloakAboutBlank"></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Open a new tab</strong><span>Open a blank page in a separate tab.</span></div><button class="settings-reset" id="openBlank">Open about:blank ↗</button></div>
+        </section>
+        <section class="settings-card" id="about-nightfall">
+          <div class="settings-card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>About Nightfall</div>
+          <div class="settings-row"><div class="settings-copy"><strong>Nightfall</strong><span>Version 1.0.0</span></div><div class="nightfall-mark" aria-label="Nightfall logo">✦</div></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Wordmark artwork</strong><span>Nightfall branding and interface artwork.</span></div><div class="settings-control"><span class="license-pill">Nightfall</span><span class="license-pill">Open source</span></div></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Reset settings</strong><span>Restore all Nightfall preferences.</span></div><button class="settings-reset" id="resetAllSettings">↶　Reset settings</button></div>
+        </section>
       </div>
     </div>
   </section>
@@ -371,6 +383,18 @@
       try{['nightfall-hover','nightfall-reduce-motion','nightfall-tab-title','nightfall-tab-preset'].forEach(key=>localStorage.removeItem(key))}catch(e){}
     });
     $('#openBlank').addEventListener('click',()=>window.open('about:blank','_blank','noopener'));
+    const cloakAboutBlank=$('#cloakAboutBlank');
+    cloakAboutBlank.checked=localStorage.getItem('nightfall-cloak-about-blank')==='1';
+    cloakAboutBlank.addEventListener('change',()=>{try{localStorage.setItem('nightfall-cloak-about-blank',cloakAboutBlank.checked?'1':'0')}catch(e){}});
+    $('#resetAllSettings').addEventListener('click',()=>{
+      try{Object.keys(localStorage).filter(key=>key.startsWith('nightfall-')).forEach(key=>localStorage.removeItem(key))}catch(e){}
+      document.body.classList.remove('hover-blue','hover-purple','hover-silver','reduce-motion');
+      document.body.classList.add('hover-white');
+      document.querySelectorAll('[data-hover]').forEach(item=>item.classList.toggle('active',item.dataset.hover==='white'));
+      reduceAnimations.checked=false;cloakAboutBlank.checked=false;
+      searchProvider.value='duck';currentEngine='duck';pageEngine.value='Scramjet v2';
+      tabAppearance.value='Nightfall';customTabTitle.value='';updateTabTitle();
+    });
     try{
       const savedHover=localStorage.getItem('nightfall-hover');
       if(savedHover&&['white','blue','purple','silver'].includes(savedHover)){
