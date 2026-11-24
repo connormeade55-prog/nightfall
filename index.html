@@ -55,6 +55,34 @@
     .hole-streak{position:absolute;left:50%;top:50%;width:118px;height:1px;transform:translate(-50%,-50%) rotate(-32deg);background:linear-gradient(90deg,transparent,#c5a3ff99,transparent);filter:blur(.5px)}
     @keyframes holeSpin{to{transform:rotate(360deg)}}
     @media(pointer:coarse),(prefers-reduced-motion:reduce){.cursor-hole{display:none}}
+    body.settings-open{overflow:hidden}
+    body.settings-open .topbar,body.settings-open main,body.settings-open .status,body.settings-open .footer-pill{display:none}
+    .settings-page{display:none;position:fixed;inset:0;z-index:35;overflow:auto;background:#000;color:#f5f5f5}
+    body.settings-open .settings-page{display:block}
+    .settings-layout{width:min(1116px,calc(100% - 48px));min-height:100%;margin:30px auto 42px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:25px;align-items:start}
+    .settings-sidebar{position:sticky;top:30px;padding-top:5px}.settings-sidebar h1{font-size:30px;letter-spacing:-1.2px;margin:0 0 27px}
+    .settings-nav{display:grid;gap:8px}.settings-nav button{border:0;background:transparent;color:#a7a7aa;text-align:left;padding:10px 9px;border-radius:9px;display:flex;align-items:center;gap:11px;font-size:14px;cursor:pointer}
+    .settings-nav button:hover,.settings-nav button.active{background:#111114;color:#fff}
+    .settings-nav svg,.settings-card-title svg,.settings-reset svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+    .settings-main{display:grid;gap:16px;min-width:0}.settings-card{background:#0a0a0b;border-radius:17px;padding:17px 18px 8px;scroll-margin-top:20px}
+    .settings-card-title{height:42px;display:flex;align-items:flex-start;gap:11px;border-bottom:1px solid #252528;font-size:17px;font-weight:650}
+    .settings-row{min-height:73px;padding:13px 0;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid #252528}.settings-row:last-child{border-bottom:0}
+    .settings-copy{min-width:0}.settings-copy strong{display:block;font-size:14px;font-weight:650;margin-bottom:6px}.settings-copy span{display:block;color:#a9a9ae;font-size:12px;line-height:1.55;max-width:430px}
+    .settings-control{flex:none;display:flex;align-items:center;gap:6px}.color-choice{display:flex;align-items:center;gap:5px;border:1px solid #242428;border-radius:9px;padding:7px 9px;background:transparent;color:#ddd;font-size:11px;cursor:pointer}
+    .color-choice.active{border-color:#555;background:#151518}.color-dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+    .toggle{appearance:none;width:46px;height:27px;border:1px solid #414146;border-radius:20px;background:#17171a;position:relative;cursor:pointer;transition:background .18s,border-color .18s;flex:none}
+    .toggle:before{content:"";position:absolute;width:19px;height:19px;left:3px;top:3px;border-radius:50%;background:#aaa;transition:transform .18s,background .18s}
+    .toggle:checked{background:#f2f2f3;border-color:#f2f2f3}.toggle:checked:before{transform:translateX(19px);background:#111}
+    .settings-select,.settings-input{width:130px;max-width:42vw;border:1px solid #29292e;background:#0b0b0d;color:#eee;border-radius:11px;padding:12px 11px;font-size:13px;outline:none}
+    .settings-select:focus,.settings-input:focus{border-color:#777}.settings-input{width:218px}
+    .tab-preview{width:min(290px,100%);height:42px;background:#111113;border-radius:10px 10px 0 0;margin:0 0 10px;padding:9px 11px;display:flex;align-items:center;gap:9px;font-size:13px}
+    .preview-icon{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;background:#27202f;color:#d8c1ff;font-size:12px}
+    .settings-reset{display:flex;align-items:center;gap:8px;border:1px solid #29292e;border-radius:11px;background:transparent;color:#eee;padding:11px 13px;font-size:13px;font-weight:600;cursor:pointer}
+    .settings-reset:hover{background:#17171a}.settings-back{position:fixed;z-index:36;left:0;top:50%;transform:translateY(-50%);width:25px;height:52px;border:0;border-radius:0 14px 14px 0;background:#17171a;color:#bbb;font-size:22px;cursor:pointer}
+    .settings-hint{font-size:12px;color:#85858b;line-height:1.6;padding:12px 0}
+    body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    @media(max-width:760px){.settings-layout{width:calc(100% - 28px);margin:18px auto 28px;grid-template-columns:1fr;gap:15px}.settings-sidebar{position:static;padding:0}.settings-sidebar h1{font-size:27px;margin-bottom:13px}.settings-nav{display:flex;overflow-x:auto;gap:5px;padding-bottom:5px}.settings-nav button{white-space:nowrap;font-size:12px;padding:9px}.settings-card{padding:14px 13px 6px}.settings-row{gap:10px}.settings-copy span{max-width:260px}.color-choice{padding:7px 6px;font-size:10px}.settings-control{gap:4px}.settings-select{width:120px}.settings-input{width:140px}}
+    @media(max-width:430px){.settings-row{align-items:flex-start;flex-direction:column}.settings-control{align-self:flex-end}.settings-copy span{max-width:none}.settings-reset{padding:9px 10px}}
     main{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 20px 100px}
     .hero{width:min(100%,590px);display:flex;flex-direction:column;align-items:center;transform:translateY(-3px)}
     .wordmark{height:155px;display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:4px;white-space:nowrap}
@@ -190,6 +218,48 @@
     <button type="button" data-modal="terms"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5M8 13h8m-8 4h8"/></svg>Terms of Service</button>
   </div>
 
+  <section class="settings-page" id="settingsPage" aria-label="Nightfall settings">
+    <button class="settings-back" id="settingsBack" aria-label="Back to homepage">›</button>
+    <div class="settings-layout">
+      <aside class="settings-sidebar"><h1>Settings</h1>
+        <nav class="settings-nav" aria-label="Settings sections">
+          <button class="active" data-settings-target="appearance">◉　Appearance</button>
+          <button data-settings-target="web-search">◎　Web search</button>
+          <button data-settings-target="browser-tab">▣　Browser tab</button>
+          <button data-settings-target="about-blank">↗　About:blank</button>
+          <button data-settings-target="about-nightfall">ⓘ　About Nightfall</button>
+        </nav>
+      </aside>
+      <div class="settings-main">
+        <section class="settings-card" id="appearance">
+          <div class="settings-card-title">◉　Appearance</div>
+          <div class="settings-row"><div class="settings-copy"><strong>Hover color</strong><span>Choose the highlight color for buttons and shortcuts.</span></div><div class="settings-control">
+            <button class="color-choice active" data-hover="white"><i class="color-dot" style="background:#f5f5f5"></i>White</button>
+            <button class="color-choice" data-hover="blue"><i class="color-dot" style="background:#8bb8ff"></i>Blue</button>
+            <button class="color-choice" data-hover="purple"><i class="color-dot" style="background:#c49aff"></i>Purple</button>
+            <button class="color-choice" data-hover="silver"><i class="color-dot" style="background:#bfc4cc"></i>Silver</button>
+          </div></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Reduce animations</strong><span>Minimize movement throughout the interface.</span></div><input class="toggle" type="checkbox" id="reduceAnimations"></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Oneko cat</strong><span>A pixel cat follows your mouse.</span></div><input class="toggle" type="checkbox" id="onekoToggle" checked></div>
+        </section>
+        <section class="settings-card" id="web-search">
+          <div class="settings-card-title">◎　Web search</div>
+          <div class="settings-row"><div class="settings-copy"><strong>Search provider</strong><span>Choose where Nightfall sends searches from Home and the address bar.</span></div><select class="settings-select" id="searchProvider"><option value="duck">DuckDuckGo</option><option value="google">Google</option><option value="bing">Bing</option></select></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Page engine</strong><span>Choose the default engine for new tabs. The active tab reloads with this engine when you return to the browser.</span></div><select class="settings-select" id="pageEngine"><option>Scramjet v2</option><option>Ultraviolet</option><option>Native</option></select></div>
+        </section>
+        <section class="settings-card" id="browser-tab">
+          <div class="settings-card-title">▣　Browser tab</div>
+          <div class="tab-preview"><span class="preview-icon">✦</span><span id="tabPreviewTitle">Nightfall</span></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Tab appearance</strong><span>Change the title and icon shown in your browser tab.</span></div><select class="settings-select" id="tabAppearance"><option value="Nightfall">Nightfall</option><option value="Black">Black</option><option value="Blank">Blank</option><option value="Custom">Custom</option></select></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Custom title</strong><span>Leave blank to use the selected preset.</span></div><input class="settings-input" id="customTabTitle" placeholder="Custom tab title" maxlength="50"></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Restore tab defaults</strong></div><button class="settings-reset" id="resetAppearance">↶　Reset appearance</button></div>
+        </section>
+        <section class="settings-card" id="about-blank"><div class="settings-card-title">↗　About:blank</div><div class="settings-row"><div class="settings-copy"><strong>Open About:blank</strong><span>Open a blank browser page in a new tab.</span></div><button class="settings-reset" id="openBlank">Open page ↗</button></div></section>
+        <section class="settings-card" id="about-nightfall"><div class="settings-card-title">ⓘ　About Nightfall</div><div class="settings-hint">Nightfall is your space for browsing, studying, and exploring. This settings page is part of the Nightfall homepage.</div></section>
+      </div>
+    </div>
+  </section>
+
   <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <section class="modal">
       <div class="modal-head"><h2 id="modalTitle">Nightfall</h2><button class="close-modal" id="closeModal" aria-label="Close">×</button></div>
@@ -279,7 +349,7 @@
     $('#modalOkay').addEventListener('click',closeModal);
     modal.addEventListener('click',event=>{if(event.target===modal)closeModal()});
     document.addEventListener('keydown',event=>{if(event.key==='Escape'){closeModal();$('#engineMenu').classList.remove('open')}});
-    document.querySelectorAll('[data-modal]').forEach(button=>button.addEventListener('click',()=>openModal(button.dataset.modal)));
+    document.querySelectorAll('[data-modal]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.modal==='settings'){openSettings();return;}openModal(button.dataset.modal);}));
     document.querySelectorAll('[data-panel]').forEach(button=>button.addEventListener('click',event=>{event.preventDefault();openModal(button.dataset.panel)}));
     document.querySelector('.brand').addEventListener('click',event=>{event.preventDefault();closeModal();window.scrollTo({top:0,behavior:'smooth'})});
   </script>
