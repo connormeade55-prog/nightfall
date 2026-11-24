@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
   <title>Nightfall</title>
+  <link rel="icon" type="image/jpeg" href="/assets/nightfall-black-hole.jpg">
   <meta name="description" content="Nightfall — your space for studies, movies, apps, and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +19,7 @@
     button{color:inherit}
     .topbar{position:fixed;z-index:20;left:0;right:0;top:0;height:72px;padding:0 18px;display:flex;align-items:center;gap:34px}
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:700;font-size:19px;letter-spacing:-.5px}
-    .brand-mark{width:30px;height:30px;border:1px solid #292333;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#48316c,#100d17 68%);font-size:18px;box-shadow:0 0 15px #7a49b522}
+    .brand-mark{width:32px;height:32px;display:block;object-fit:cover;border-radius:7px;box-shadow:0 0 13px #ff8a3026;flex:none}
     .nav{display:flex;align-items:center;gap:25px}
     .nav a{color:#c6c6ca;text-decoration:none;font-size:14px;display:flex;align-items:center;gap:8px;transition:color .2s}
     .nav a:hover,.nav a.active{color:#fff}
@@ -76,11 +77,11 @@
     .settings-select,.settings-input{width:130px;max-width:42vw;border:1px solid #29292e;background:#0b0b0d;color:#eee;border-radius:11px;padding:12px 11px;font-size:13px;outline:none}
     .settings-select:focus,.settings-input:focus{border-color:#777}.settings-input{width:218px}
     .tab-preview{width:min(290px,100%);height:42px;background:#111113;border-radius:10px 10px 0 0;margin:0 0 10px;padding:9px 11px;display:flex;align-items:center;gap:9px;font-size:13px}
-    .preview-icon{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;background:#27202f;color:#d8c1ff;font-size:12px}
+    .preview-icon{width:18px;height:18px;border-radius:4px;display:block;object-fit:cover;flex:none}
     .settings-reset{display:flex;align-items:center;gap:8px;border:1px solid #29292e;border-radius:11px;background:transparent;color:#eee;padding:11px 13px;font-size:13px;font-weight:600;cursor:pointer}
     .settings-reset:hover{background:#17171a}.settings-back{position:fixed;z-index:36;left:0;top:50%;transform:translateY(-50%);width:25px;height:52px;border:0;border-radius:0 14px 14px 0;background:#17171a;color:#bbb;font-size:22px;cursor:pointer}
     .settings-hint{font-size:12px;color:#85858b;line-height:1.6;padding:12px 0}
-    .nightfall-mark{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#a78bfa,#292036 62%,#0a0a0b);color:#fff;font-size:21px;flex:none}
+    .nightfall-mark{width:38px;height:38px;border-radius:8px;display:block;object-fit:cover;flex:none}
     .license-pill{border:1px solid #29292e;border-radius:8px;padding:7px 10px;font-size:11px;color:#ddd;white-space:nowrap}
 
     body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important} body.reduce-motion .cursor-hole{display:none!important;opacity:0!important}
@@ -176,7 +177,7 @@
   </div>
 
   <header class="topbar">
-    <a class="brand" href="#" aria-label="Nightfall home"><span class="brand-mark">✦</span><span>Nightfall</span></a>
+    <a class="brand" href="#" aria-label="Nightfall home"><img class="brand-mark" src="/assets/nightfall-black-hole.jpg" alt=""><span>Nightfall</span></a>
     <nav class="nav" aria-label="Main navigation">
       <a href="#studies" data-panel="Studies"><svg viewBox="0 0 24 24"><path d="M3 8.5a2 2 0 0 1 2-2h3l2 2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 11v5l5-2.5z"/></svg>Studies</a>
       <a href="#movies" data-panel="Movies"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="m7 5 3 5m3-5 3 5m3-5 2 3"/></svg>Movies</a>
@@ -252,7 +253,7 @@
         </section>
         <section class="settings-card" id="browser-tab">
           <div class="settings-card-title"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 6.5h.01M11 6.5h.01"/></svg>Browser tab</div>
-          <div class="tab-preview"><span class="preview-icon">✦</span><span id="tabPreviewTitle">Nightfall</span></div>
+          <div class="tab-preview"><img class="preview-icon" src="/assets/nightfall-black-hole.jpg" alt=""><span id="tabPreviewTitle">Nightfall</span></div>
           <div class="settings-row"><div class="settings-copy"><strong>Tab appearance</strong><span>Change the title and icon shown in your browser tab.</span></div><select class="settings-select" id="tabAppearance"><option value="Nightfall">Nightfall</option><option value="Black">Black</option><option value="Blank">Blank</option><option value="Custom">Custom</option></select></div>
           <div class="settings-row"><div class="settings-copy"><strong>Custom title</strong><span>Leave blank to use the selected preset.</span></div><input class="settings-input" id="customTabTitle" placeholder="Custom tab title" maxlength="50"></div>
           <div class="settings-row"><div class="settings-copy"><strong>Restore tab defaults</strong></div><button class="settings-reset" id="resetAppearance">↶　Reset appearance</button></div>
@@ -264,7 +265,7 @@
         </section>
         <section class="settings-card" id="about-nightfall">
           <div class="settings-card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>About Nightfall</div>
-          <div class="settings-row"><div class="settings-copy"><strong>Nightfall</strong><span>Version 1.0.0</span></div><div class="nightfall-mark" aria-label="Nightfall logo">✦</div></div>
+          <div class="settings-row"><div class="settings-copy"><strong>Nightfall</strong><span>Version 1.0.0</span></div><img class="nightfall-mark" src="/assets/nightfall-black-hole.jpg" alt="Nightfall black hole logo"></div>
           <div class="settings-row"><div class="settings-copy"><strong>Wordmark artwork</strong><span>Nightfall branding and interface artwork.</span></div><div class="settings-control"><span class="license-pill">Nightfall</span><span class="license-pill">Open source</span></div></div>
           <div class="settings-row"><div class="settings-copy"><strong>Reset settings</strong><span>Restore all Nightfall preferences.</span></div><button class="settings-reset" id="resetAllSettings">↶　Reset settings</button></div>
         </section>
