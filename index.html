@@ -65,7 +65,7 @@
     .settings-nav button:hover,.settings-nav button.active{background:#111114;color:#fff}
     .settings-nav svg,.settings-card-title svg,.settings-reset svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
     .settings-main{display:grid;gap:16px;min-width:0}.settings-card{background:#0a0a0b;border-radius:17px;padding:17px 18px 8px;scroll-margin-top:20px}
-    .settings-card-title{height:42px;display:flex;align-items:flex-start;gap:11px;border-bottom:1px solid #252528;font-size:17px;font-weight:650}
+    .settings-card-title{height:42px;display:flex;align-items:flex-start;gap:11px;border-bottom:1px solid #252528;font-size:17px;font-weight:650}.settings-card-title svg{width:20px;height:20px;margin-top:1px}
     .settings-row{min-height:73px;padding:13px 0;display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:1px solid #252528}.settings-row:last-child{border-bottom:0}
     .settings-copy{min-width:0}.settings-copy strong{display:block;font-size:14px;font-weight:650;margin-bottom:6px}.settings-copy span{display:block;color:#a9a9ae;font-size:12px;line-height:1.55;max-width:430px}
     .settings-control{flex:none;display:flex;align-items:center;gap:6px}.color-choice{display:flex;align-items:center;gap:5px;border:1px solid #242428;border-radius:9px;padding:7px 9px;background:transparent;color:#ddd;font-size:11px;cursor:pointer}
@@ -223,16 +223,16 @@
     <div class="settings-layout">
       <aside class="settings-sidebar"><h1>Settings</h1>
         <nav class="settings-nav" aria-label="Settings sections">
-          <button class="active" data-settings-target="appearance">◉　Appearance</button>
-          <button data-settings-target="web-search">◎　Web search</button>
-          <button data-settings-target="browser-tab">▣　Browser tab</button>
-          <button data-settings-target="about-blank">↗　About:blank</button>
-          <button data-settings-target="about-nightfall">ⓘ　About Nightfall</button>
+          <button class="active" data-settings-target="appearance"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3 1.8 1.8 0 0 1 1.4-3h1.1A3.8 3.8 0 0 0 21 10.9C21 6.5 17 3 12 3Z"/><circle cx="7.5" cy="10" r="1"/><circle cx="11" cy="6.8" r="1"/><circle cx="16" cy="8.5" r="1"/></svg>Appearance</button>
+          <button data-settings-target="web-search"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0-18"/></svg>Web search</button>
+          <button data-settings-target="browser-tab"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 6.5h.01M11 6.5h.01"/></svg>Browser tab</button>
+          <button data-settings-target="about-blank"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>About:blank</button>
+          <button data-settings-target="about-nightfall"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>About Nightfall</button>
         </nav>
       </aside>
       <div class="settings-main">
         <section class="settings-card" id="appearance">
-          <div class="settings-card-title">◉　Appearance</div>
+          <div class="settings-card-title"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3 1.8 1.8 0 0 1 1.4-3h1.1A3.8 3.8 0 0 0 21 10.9C21 6.5 17 3 12 3Z"/><circle cx="7.5" cy="10" r="1"/><circle cx="11" cy="6.8" r="1"/><circle cx="16" cy="8.5" r="1"/></svg>Appearance</div>
           <div class="settings-row"><div class="settings-copy"><strong>Hover color</strong><span>Choose the highlight color for buttons and shortcuts.</span></div><div class="settings-control">
             <button class="color-choice active" data-hover="white"><i class="color-dot" style="background:#f5f5f5"></i>White</button>
             <button class="color-choice" data-hover="blue"><i class="color-dot" style="background:#8bb8ff"></i>Blue</button>
@@ -243,19 +243,19 @@
           <div class="settings-row"><div class="settings-copy"><strong>Oneko cat</strong><span>A pixel cat follows your mouse.</span></div><input class="toggle" type="checkbox" id="onekoToggle" checked></div>
         </section>
         <section class="settings-card" id="web-search">
-          <div class="settings-card-title">◎　Web search</div>
+          <div class="settings-card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>Web search</div>
           <div class="settings-row"><div class="settings-copy"><strong>Search provider</strong><span>Choose where Nightfall sends searches from Home and the address bar.</span></div><select class="settings-select" id="searchProvider"><option value="duck">DuckDuckGo</option><option value="google">Google</option><option value="bing">Bing</option></select></div>
           <div class="settings-row"><div class="settings-copy"><strong>Page engine</strong><span>Choose the default engine for new tabs. The active tab reloads with this engine when you return to the browser.</span></div><select class="settings-select" id="pageEngine"><option>Scramjet v2</option><option>Ultraviolet</option><option>Native</option></select></div>
         </section>
         <section class="settings-card" id="browser-tab">
-          <div class="settings-card-title">▣　Browser tab</div>
+          <div class="settings-card-title"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 6.5h.01M11 6.5h.01"/></svg>Browser tab</div>
           <div class="tab-preview"><span class="preview-icon">✦</span><span id="tabPreviewTitle">Nightfall</span></div>
           <div class="settings-row"><div class="settings-copy"><strong>Tab appearance</strong><span>Change the title and icon shown in your browser tab.</span></div><select class="settings-select" id="tabAppearance"><option value="Nightfall">Nightfall</option><option value="Black">Black</option><option value="Blank">Blank</option><option value="Custom">Custom</option></select></div>
           <div class="settings-row"><div class="settings-copy"><strong>Custom title</strong><span>Leave blank to use the selected preset.</span></div><input class="settings-input" id="customTabTitle" placeholder="Custom tab title" maxlength="50"></div>
           <div class="settings-row"><div class="settings-copy"><strong>Restore tab defaults</strong></div><button class="settings-reset" id="resetAppearance">↶　Reset appearance</button></div>
         </section>
-        <section class="settings-card" id="about-blank"><div class="settings-card-title">↗　About:blank</div><div class="settings-row"><div class="settings-copy"><strong>Open About:blank</strong><span>Open a blank browser page in a new tab.</span></div><button class="settings-reset" id="openBlank">Open page ↗</button></div></section>
-        <section class="settings-card" id="about-nightfall"><div class="settings-card-title">ⓘ　About Nightfall</div><div class="settings-hint">Nightfall is your space for browsing, studying, and exploring. This settings page is part of the Nightfall homepage.</div></section>
+        <section class="settings-card" id="about-blank"><div class="settings-card-title"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>About:blank</div><div class="settings-row"><div class="settings-copy"><strong>Open About:blank</strong><span>Open a blank browser page in a new tab.</span></div><button class="settings-reset" id="openBlank">Open page ↗</button></div></section>
+        <section class="settings-card" id="about-nightfall"><div class="settings-card-title"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>About Nightfall</div><div class="settings-hint">Nightfall is your space for browsing, studying, and exploring. This settings page is part of the Nightfall homepage.</div></section>
       </div>
     </div>
   </section>
